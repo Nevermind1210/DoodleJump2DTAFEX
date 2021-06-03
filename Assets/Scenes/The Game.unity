@@ -163,7 +163,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &143901934
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 299991326}
   - component: {fileID: 299991325}
   - component: {fileID: 299991324}
+  - component: {fileID: 299991327}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -352,6 +353,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &299991327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299991323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2163efb74fd0a34f93d0909b69b04c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 143901936}
 --- !u!1 &1043976355
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,14 +513,6 @@ PrefabInstance:
     - target: {fileID: 5920138428815664202, guid: 2aac8f315718a154c9c7497907bc3371, type: 3}
       propertyPath: m_Name
       value: Platform
-      objectReference: {fileID: 0}
-    - target: {fileID: 7065495609572377501, guid: 2aac8f315718a154c9c7497907bc3371, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 7065495609572377501, guid: 2aac8f315718a154c9c7497907bc3371, type: 3}
-      propertyPath: m_UsedByEffector
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207922678444844717, guid: 2aac8f315718a154c9c7497907bc3371, type: 3}
       propertyPath: m_LocalPosition.x

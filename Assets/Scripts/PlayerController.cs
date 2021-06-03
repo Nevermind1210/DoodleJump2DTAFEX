@@ -10,6 +10,17 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
 
     private float moveX;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        moveX = Input.GetAxis("Horizontal") * moveSpeed;
+    }
+
     // Start is called before the first frame update
     private void FixedUpdate()
     {
