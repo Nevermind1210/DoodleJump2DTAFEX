@@ -11,6 +11,7 @@ public class Platform : MonoBehaviour
     {
         if (collision.relativeVelocity.y <= 0f)
         {
+            UIHandler.score += 1;
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
