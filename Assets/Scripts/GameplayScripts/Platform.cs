@@ -13,7 +13,7 @@ public class Platform : MonoBehaviour
         {
             //collision.gameObject.GetComponent<Animator>().SetTrigger("Landing");
             collision.gameObject.GetComponent<PlayerController>().AnimDelay();
-            UIHandler.score += 1;
+            UIScoreHandler.score += 1;
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

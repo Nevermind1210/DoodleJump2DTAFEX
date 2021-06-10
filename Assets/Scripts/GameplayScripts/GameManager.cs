@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOver;
+    public GameObject score;
     public GameObject player;
     public GameObject platformPrefab;
     private GameObject myPlat;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         else if (collision.gameObject.tag == "Player")
         {
             gameOver.SetActive(true);
+            score.SetActive(false);
         }
     }
     

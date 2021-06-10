@@ -21,6 +21,7 @@ public class Destoryer : MonoBehaviour
         else if (collision2D.gameObject.name.StartsWith("Player"))
         {
             gameOver.SetActive(true);
+
         }
     }
 }
