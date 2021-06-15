@@ -15,12 +15,12 @@ public class GameManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform") // this system is essentially preventing the player from using the same platform over and over again this adds a layer of difficulty.
         {
             Destroy(collision.gameObject);
             GeneratePlatform();
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Player") // Detects the player if they pass it and if so means they died... poof gone kabluey.
         {
             gameOver.SetActive(true);
             score.SetActive(false);
