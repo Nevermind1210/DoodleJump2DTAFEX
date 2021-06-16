@@ -14,7 +14,7 @@ public class GameSave : MonoBehaviour
             Directory.CreateDirectory("Saves");
 
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream saveFile = File.Create("Saves/save.binary");
+        FileStream saveFile = File.Create("Saves/save.bin");
 
         formatter.Serialize(saveFile, gs);
 
@@ -24,7 +24,7 @@ public class GameSave : MonoBehaviour
     public void LoadData()
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream saveFile = File.Open("Saves/save.binary", FileMode.Open);
+        FileStream saveFile = File.Open("Saves/save.bin", FileMode.Open);
 
         gs = (GameState)formatter.Deserialize(saveFile);
 

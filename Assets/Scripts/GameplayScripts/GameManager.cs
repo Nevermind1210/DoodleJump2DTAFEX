@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         {
             gameOver.SetActive(true);
             score.SetActive(false);
+            
         }
     }
     
