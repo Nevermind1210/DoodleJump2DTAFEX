@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Saving_Stuff
 {
-    public class HighScoreSystem : MonoBehaviour
+    public class HighScoreSystem : MonoBehaviour, IComparer<SaveData>
     {
         [Header("Data Holder")]
         [SerializeField] private int scoreToSave;
@@ -23,6 +23,7 @@ namespace Saving_Stuff
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + 
                                           "/save.bin");
+
             SaveData data = new SaveData();
             data.savedHighScore = scoreToSave;
             data.savedPosition = positionToSave;
@@ -86,6 +87,11 @@ namespace Saving_Stuff
         {
             yield return new WaitForSeconds(3);
             successDeletion.SetActive(false);
+        }
+
+        public int Compare(SaveData x, SaveData y)
+        {
+            throw new NotImplementedException();
         }
     }
     

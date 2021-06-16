@@ -11,32 +11,41 @@ public class UIScoreHandler : MonoBehaviour
     public GameObject scoreText;
     public GameObject highScore;
     public GameObject player;
+    public string charName;
+    public TextMeshProUGUI nameContainer;
     public static int score;
 
     private void Start()
     {
         score = 0;
-        highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        //highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
 
-        //SaveData data = _highScoreSystem.LoadGame();
-        //highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed" + data.savedHighScore;
+        SaveData data = _highScoreSystem.LoadGame();
+        highScore.GetComponent<TextMeshProUGUI>().text = "Platforms currently Climbed: " + data.savedHighScore;
     }
 
     private void Update()
     {
-        //SaveData data = _highScoreSystem.SaveGame();
+        SaveData data = _highScoreSystem.SaveGame();
         scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         finalScore.GetComponent<TextMeshProUGUI>().text = "You made it to: " + score + " platforms";
 
-        if (score > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", score);
-            highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed: " + PlayerPrefs.GetInt("HighScore", score).ToString();
-        }
+        nameContainer.text = charName;
 
-        /*if (score > data.savedHighScore)
+        //if (score > PlayerPrefs.GetInt("HighScore", 0))
+        //{
+        //    PlayerPrefs.SetInt("HighScore", score);
+        //    highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed: " + PlayerPrefs.GetInt("HighScore", score).ToString();
+        //}
+
+        if (score > data.savedHighScore)
         {
-            scoreText.GetComponent<TextMeshProUGUI>().text = "Platform Climbed: " + data.savedHighScore;
-        }*/
+            scoreText.GetComponent<TextMeshProUGUI>().text = " Highest Platform Climbed: " + data.savedHighScore;
+        }
+    }
+
+    public void CharacterName(string name)
+    {
+        charName = name;
     }
 }
