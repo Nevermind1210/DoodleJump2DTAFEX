@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Saving_Stuff;
 
 public class GameManager : MonoBehaviour
 {
+    private HighScoreSystem _highScoreSystem;
     public GameObject gameOver;
     public GameObject score;
     public GameObject player;
     public GameObject platformPrefab;
     private GameObject myPlat;
+
+    private void Start()
+    {
+        _highScoreSystem.SaveGame();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,7 +31,6 @@ public class GameManager : MonoBehaviour
         {
             gameOver.SetActive(true);
             score.SetActive(false);
-            
         }
     }
     

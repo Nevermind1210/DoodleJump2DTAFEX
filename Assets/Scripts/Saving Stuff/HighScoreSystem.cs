@@ -9,15 +9,34 @@ namespace Saving_Stuff
 {
     public class HighScoreSystem : MonoBehaviour, IComparer<SaveData>
     {
+        private static HighScoreSystem instance;
+        private string filePath;
+        public List<SaveData> dataToSave = new List<SaveData>();
+        
         [Header("Data Holder")]
         [SerializeField] private int scoreToSave;
-        [SerializeField] private int positionToSave;
+        private int positionToSave;
         [SerializeField] private string nameToSave;
         
         [Header("PlayerFeedBack")]
         [SerializeField] private GameObject failedDeletion;
         [SerializeField] private GameObject successDeletion;
-        
+
+        private void Awake()
+        {
+            if (!instance)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            filePath = Application.persistentDataPath + "/save.bin";
+            SaveGame();
+        }
+
         public SaveData SaveGame()
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -39,6 +58,7 @@ namespace Saving_Stuff
             if(File.Exists(Application.persistentDataPath 
                             + "/save.bin"))
             {
+                //file existence
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file =
                     File.Open(Application.persistentDataPath
@@ -57,7 +77,7 @@ namespace Saving_Stuff
             }
         }
 
-        public void ResetData()
+        public SaveData ResetData()
         {
             if (File.Exists(Application.persistentDataPath
                             + "save.bin"))
@@ -75,6 +95,7 @@ namespace Saving_Stuff
                 failedDeletion.SetActive(true);
                 Debug.LogError("No save data to delete!!");
                 StartCoroutine(failedDelete());
+                return null;
         }
 
         IEnumerator failedDelete()
@@ -91,7 +112,7 @@ namespace Saving_Stuff
 
         public int Compare(SaveData x, SaveData y)
         {
-            throw new NotImplementedException();
+            return x.savedPosition - y.savedPosition;
         }
     }
     
