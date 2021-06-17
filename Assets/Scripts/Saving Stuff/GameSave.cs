@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Saving_Stuff;
 using UnityEngine;
 
 public class GameSave : MonoBehaviour
 {
     public GameState gs;
+    
 
     public void SaveData()
     {

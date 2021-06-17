@@ -4,124 +4,85 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
 
 namespace Saving_Stuff
 {
-    public class HighScoreSystem : MonoBehaviour, IComparer<SaveData>
+    [System.Serializable]
+    public class HighScoreSystem : MonoBehaviour
     {
-        private static HighScoreSystem instance;
-        private string filePath;
-        public List<SaveData> dataToSave = new List<SaveData>();
+        [Header("Score Display Objects")] [SerializeField]
+        private TextMeshProUGUI scorePrefab;
+        [SerializeField] private Transform scoreContent;
         
-        [Header("Data Holder")]
-        [SerializeField] private int scoreToSave;
-        private int positionToSave;
-        [SerializeField] private string nameToSave;
+        [SerializeField] private TextMeshProUGUI nameDisplay;
+        [SerializeField] private TextMeshProUGUI scoreDisplay;
         
-        [Header("PlayerFeedBack")]
-        [SerializeField] private GameObject failedDeletion;
-        [SerializeField] private GameObject successDeletion;
+        private HighScoreSystem instance;
+        
+        // Cool Saving Stuff~!
+        private string FilePath => Application.streamingAssetsPath + "/save";
+        private SaveData _gameSave;
+        private SaveData _loadedGameData;
 
         private void Awake()
         {
             if (!instance)
             {
+                Destroy(instance);
+            }
+            else
+            {
                 instance = this;
             }
-            else
-            {
-                Destroy(gameObject);
-            }
-
-            filePath = Application.streamingAssetsPath + "/save.bin";
-            SaveGame();
-        }
-
-        public SaveData SaveGame()
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.streamingAssetsPath + 
-                                          "/save.bin");
-
-            SaveData data = new SaveData();
-            data.savedHighScore = scoreToSave;
-            data.savedPosition = positionToSave;
-            data.savedPName = nameToSave;
-            bf.Serialize(file, data);
-            file.Close();
-            Debug.Log("Game data saved!");
-            return null;
-        }
-
-        public SaveData LoadGame()
-        {
-            if(File.Exists(Application.streamingAssetsPath
-                            + "/save.bin"))
-            {
-                //file existence
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream file =
-                    File.Open(Application.streamingAssetsPath
-                              + "\\Save.bin", FileMode.Open);
-                SaveData data = (SaveData) bf.Deserialize(file);
-                file.Close();
-                scoreToSave = data.savedHighScore;
-                positionToSave = data.savedPosition;
-                nameToSave = data.savedPName;
-                Debug.Log("Data Loaded");
-                return data;
-            }
-            else
-            {
-                Debug.LogError("THERE ISN'T A SAVE DOOFUS");
-                return null;
-            }
-        }
-
-        public SaveData ResetData()
-        {
-            if (File.Exists(Application.streamingAssetsPath
-                            + "/save.bin"))
-            {
-                File.Delete(Application.streamingAssetsPath
-                            + "/save.bin");
-                 scoreToSave = 0;
-                 positionToSave = 0;
-                 nameToSave = "";
-                 successDeletion.SetActive(true);
-                 Debug.Log("Data Reset Complete");
-                 StartCoroutine(successDelete());
-            }
-            else
-                failedDeletion.SetActive(true);
-                Debug.LogError("No save data to delete!!");
-                StartCoroutine(failedDelete());
-                return null;
-        }
-
-        IEnumerator failedDelete()
-        {
-            yield return new WaitForSeconds(3);
-            failedDeletion.SetActive(false);
+            DisplayHighScore();
         }
         
-        IEnumerator successDelete()
+        public void DisplayHighScore()
         {
-            yield return new WaitForSeconds(3);
-            successDeletion.SetActive(false);
+            foreach (Transform child in scoreContent)
+            {
+                Destroy(child.gameObject);
+            }
+
+            foreach (HighScores _highScores in _loadedGameData.highScores)
+            {
+                TextMeshProUGUI scoreText = Instantiate(scorePrefab, scoreContent);
+                scoreText.text = _highScores.name + " - " + _highScores.score;
+            }
+        }
+        public void SaveGame()
+        {
+            _gameSave = new SaveData(UIScoreHandler.highScores);
+
+            using (FileStream stream = new FileStream(FilePath + ".bin", FileMode.OpenOrCreate))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                
+                bf.Serialize(stream, _gameSave);
+            }
         }
 
-        public int Compare(SaveData x, SaveData y)
+        public void LoadGame()
         {
-            return x.savedPosition - y.savedPosition;
+            if (File.Exists(FilePath + ".bin"))
+            {
+                Debug.Log("Loaded Save File");
+                return;
+            }
+            else
+            {
+                Debug.Log("No Save Found!!");
+            }
+
+            using (FileStream stream = new FileStream(FilePath + ".bin", FileMode.Open))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                
+                _loadedGameData = bf.Deserialize(stream) as SaveData;
+                if (_loadedGameData != null) _loadedGameData.Sort();
+            }
         }
-    }
-    
-    [Serializable]
-    public class SaveData
-    {
-        public int savedHighScore;
-        public int savedPosition;
-        public string savedPName;
     }
 }

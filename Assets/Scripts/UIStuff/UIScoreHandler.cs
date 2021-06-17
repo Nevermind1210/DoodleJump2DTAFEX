@@ -1,55 +1,41 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Saving_Stuff;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class UIScoreHandler : MonoBehaviour
 {
-    [SerializeField] public HighScoreSystem _highScoreSystem;
-    // this all relied on PlayerPref... I'm going to keep this... mostly to show the score
-    public GameObject finalScore;
-    public GameObject scoreText;
-    public GameObject highScore;
-    public GameObject player;
-    public string charName;
-    public TextMeshProUGUI nameContainer;
+    public string TheName;
+    [SerializeField] private TMP_InputField nameInput;
+
+    [Header("Score")] 
     public static int score;
-    SaveData dataSaving;
-    SaveData dataLoading;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI finalScore;
+
+    public static List<HighScores> highScores = new List<HighScores>();
+    public HighScores scoring;
+    
     private void Start()
     {
-        dataLoading = _highScoreSystem.LoadGame();
         score = 0;
-        //highScore.GetComponent<TextMeshProUGUI>().text = "Platforms Climbed: " + PlayerPrefs.GetInt("HighScore", 0).ToString();
-        highScore.GetComponent<TextMeshProUGUI>().text = "Highest Platform climbed: " + dataLoading.savedHighScore;
     }
 
     private void Update()
     {
-        scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-        finalScore.GetComponent<TextMeshProUGUI>().text = "You made it to: " + score + " platforms";
-        
-        nameContainer.text = charName;
+        scoreText.text = "Score: " + score;
+        finalScore.text = "You made it to: " + score + " platforms";
 
-        if (score > dataLoading.savedHighScore)
-        {
-            score = dataSaving.savedHighScore;           
-            scoreText.GetComponent<TextMeshProUGUI>().text = "Highest Platform climbed: " + dataSaving.savedHighScore;
-        }
-
-        if (!nameContainer && nameContainer.text.Length == 3 && Input.GetKeyDown(KeyCode.Return))
-        {
-            dataSaving.savedPName = charName;
-        }
-        else
-        {
-            Debug.LogError("PUT A DAMN NAME IN");
-            dataSaving.savedPName = null;
-        }
+        TheName = nameInput.text;
     }
 
-    public void CharacterName(string name)
+    public void SetHighScore()
     {
-        charName = name;
+        scoring.name = TheName;
+        scoring.score = score;
+        
+        highScores.Add(scoring);
     }
 }

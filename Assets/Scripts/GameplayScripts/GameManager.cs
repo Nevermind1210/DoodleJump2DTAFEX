@@ -13,14 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject score;
     public GameObject player;
     public GameObject platformPrefab;
+    public GameObject highScore;
     private GameObject myPlat;
-
-    private void Start()
-    {
-        _highScoreSystem.SaveGame();
-        _highScoreSystem.LoadGame();
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Platform") // this system is essentially preventing the player from using the same platform over and over again this adds a layer of difficulty.
@@ -32,6 +27,7 @@ public class GameManager : MonoBehaviour
         {
             gameOver.SetActive(true);
             score.SetActive(false);
+            highScore.SetActive(false);
         }
     }
     
