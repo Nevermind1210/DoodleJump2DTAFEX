@@ -33,14 +33,14 @@ namespace Saving_Stuff
                 Destroy(gameObject);
             }
 
-            filePath = Application.persistentDataPath + "/save.bin";
+            filePath = Application.streamingAssetsPath + "/save.bin";
             SaveGame();
         }
 
         public SaveData SaveGame()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + 
+            FileStream file = File.Create(Application.streamingAssetsPath + 
                                           "/save.bin");
 
             SaveData data = new SaveData();
@@ -55,19 +55,20 @@ namespace Saving_Stuff
 
         public SaveData LoadGame()
         {
-            if(File.Exists(Application.persistentDataPath 
+            if(File.Exists(Application.streamingAssetsPath
                             + "/save.bin"))
             {
                 //file existence
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream file =
-                    File.Open(Application.persistentDataPath
-                              + "Save.bin", FileMode.Open);
+                    File.Open(Application.streamingAssetsPath
+                              + "\\Save.bin", FileMode.Open);
                 SaveData data = (SaveData) bf.Deserialize(file);
                 file.Close();
                 scoreToSave = data.savedHighScore;
                 positionToSave = data.savedPosition;
                 nameToSave = data.savedPName;
+                Debug.Log("Data Loaded");
                 return data;
             }
             else
@@ -79,11 +80,11 @@ namespace Saving_Stuff
 
         public SaveData ResetData()
         {
-            if (File.Exists(Application.persistentDataPath
-                            + "save.bin"))
+            if (File.Exists(Application.streamingAssetsPath
+                            + "/save.bin"))
             {
-                File.Delete(Application.persistentDataPath
-                            + "save.bin");
+                File.Delete(Application.streamingAssetsPath
+                            + "/save.bin");
                  scoreToSave = 0;
                  positionToSave = 0;
                  nameToSave = "";

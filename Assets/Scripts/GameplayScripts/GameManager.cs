@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _highScoreSystem.SaveGame();
+        _highScoreSystem.LoadGame();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

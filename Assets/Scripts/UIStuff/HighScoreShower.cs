@@ -8,13 +8,16 @@ namespace UIStuff
 {
     public class HighScoreShower : MonoBehaviour
     {
-        private HighScoreSystem system;
-        private GameObject position;
-        private GameObject score;
-        private GameObject name;
+         private HighScoreSystem system;
+        [SerializeField] private GameObject arr;
+        [SerializeField] private GameObject position;
+        [SerializeField] private GameObject score;
+        [SerializeField] private GameObject name;
 
         private void Start()
         {
+            system = transform.GetComponentInParent<HighScoreSystem>();
+            system.LoadGame();
             TextMeshProUGUI positionText = position.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI scoreText = score.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI nameText = name.GetComponent<TextMeshProUGUI>();
@@ -28,10 +31,10 @@ namespace UIStuff
                 nameText.text = saveData.savedPName;
             }
 
-            /*for (var i = 0; i < system.dataToSave.Count; i++)
+            for (var i = 0; i < system.dataToSave.Count; i++)
             {
-                Instantiate() // Instantiate the row.
-            }*/
+                Instantiate(arr); // Instantiate the row.
+            }
         }
     }
 }

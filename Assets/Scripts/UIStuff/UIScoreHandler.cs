@@ -5,7 +5,7 @@ using Saving_Stuff;
 
 public class UIScoreHandler : MonoBehaviour
 {
-    [SerializeField] private HighScoreSystem _highScoreSystem;
+    [SerializeField] public HighScoreSystem _highScoreSystem;
     // this all relied on PlayerPref... I'm going to keep this... mostly to show the score
     public GameObject finalScore;
     public GameObject scoreText;
@@ -28,15 +28,16 @@ public class UIScoreHandler : MonoBehaviour
     {
         scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
         finalScore.GetComponent<TextMeshProUGUI>().text = "You made it to: " + score + " platforms";
+        
         nameContainer.text = charName;
 
         if (score > dataLoading.savedHighScore)
         {
-            dataSaving.savedHighScore = score;
+            score = dataSaving.savedHighScore;           
             scoreText.GetComponent<TextMeshProUGUI>().text = "Highest Platform climbed: " + dataSaving.savedHighScore;
         }
 
-        if (!nameContainer)
+        if (!nameContainer && nameContainer.text.Length == 3 && Input.GetKeyDown(KeyCode.Return))
         {
             dataSaving.savedPName = charName;
         }

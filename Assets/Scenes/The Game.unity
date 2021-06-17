@@ -1760,10 +1760,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.72
+  m_fontSize: 26.95
   m_fontSizeBase: 24.72
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4002,6 +4002,7 @@ GameObject:
   - component: {fileID: 1685217181}
   - component: {fileID: 1685217183}
   - component: {fileID: 1685217182}
+  - component: {fileID: 1685217184}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4119,7 +4120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565625fc10ffc7d4e8d8c61313fbc8f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highScoreSystem: {fileID: 939051613}
+  _highScoreSystem: {fileID: 1685217184}
   finalScore: {fileID: 1801673932}
   scoreText: {fileID: 1748318859}
   highScore: {fileID: 772251430}
@@ -4237,6 +4238,23 @@ MonoBehaviour:
   scoreHandler: {fileID: 1685217181}
   pausemenuUI: {fileID: 1299061064}
   settingsUI: {fileID: 1571021813}
+--- !u!114 &1685217184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685217175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edebae87601d424cbdd5cfe2d75615a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataToSave: []
+  scoreToSave: 0
+  nameToSave: 
+  failedDeletion: {fileID: 0}
+  successDeletion: {fileID: 0}
 --- !u!1 &1717055819
 GameObject:
   m_ObjectHideFlags: 0
