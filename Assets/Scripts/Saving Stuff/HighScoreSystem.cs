@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
 
 namespace Saving_Stuff
@@ -15,32 +13,21 @@ namespace Saving_Stuff
         [Header("Score Display Objects")] [SerializeField]
         private TextMeshProUGUI scorePrefab;
         [SerializeField] private Transform scoreContent;
-        
-        [SerializeField] private TextMeshProUGUI nameDisplay;
-        [SerializeField] private TextMeshProUGUI scoreDisplay;
-        
-        private HighScoreSystem instance;
-        
+
         // Cool Saving Stuff~!
         private string FilePath => Application.streamingAssetsPath + "/save";
-        private SaveData _gameSave;
+        private SaveData _gameData;
         private SaveData _loadedGameData;
 
-        private void Awake()
+        private void Start()
         {
-            if (!instance)
-            {
-                Destroy(instance);
-            }
-            else
-            {
-                instance = this;
-            }
-            DisplayHighScore();
+            if (!Directory.Exists(Application.streamingAssetsPath))
+                Directory.CreateDirectory(Application.streamingAssetsPath);
         }
         
         public void DisplayHighScore()
         {
+            
             foreach (Transform child in scoreContent)
             {
                 Destroy(child.gameObject);
@@ -49,18 +36,18 @@ namespace Saving_Stuff
             foreach (HighScores _highScores in _loadedGameData.highScores)
             {
                 TextMeshProUGUI scoreText = Instantiate(scorePrefab, scoreContent);
-                scoreText.text = _highScores.name + " - " + _highScores.score;
+                scoreText.text = _highScores.name + " - " + _highScores.score.ToString("0");
             }
         }
         public void SaveGame()
         {
-            _gameSave = new SaveData(UIScoreHandler.highScores);
+            _gameData = new SaveData(UIScoreHandler.highScores);
 
             using (FileStream stream = new FileStream(FilePath + ".bin", FileMode.OpenOrCreate))
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 
-                bf.Serialize(stream, _gameSave);
+                bf.Serialize(stream, _gameData);
             }
         }
 
@@ -81,7 +68,7 @@ namespace Saving_Stuff
                 BinaryFormatter bf = new BinaryFormatter();
                 
                 _loadedGameData = bf.Deserialize(stream) as SaveData;
-                if (_loadedGameData != null) _loadedGameData.Sort();
+                _loadedGameData.Sort();
             }
         }
     }

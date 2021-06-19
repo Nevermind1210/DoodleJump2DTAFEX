@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
+
 namespace Saving_Stuff
 {
     [System.Serializable]
-    public class HighScores : MonoBehaviour
+    public class HighScores
     {
         public int score;
         public string name;
