@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class GameSave : MonoBehaviour
 {
+    
+    // this 
     public GameState gs;
     
 

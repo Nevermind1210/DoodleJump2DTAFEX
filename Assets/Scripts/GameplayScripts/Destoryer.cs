@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class Destoryer : MonoBehaviour
 {
+    // This whole script will use tags and if the player hits it destroy it! 
     public GameObject player;
     public GameObject gameOver;
     public GameObject platformPrefab;

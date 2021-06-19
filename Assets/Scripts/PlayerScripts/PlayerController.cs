@@ -42,12 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetTrigger("Falling");
     }
-
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        //anim.SetTrigger("Landing");
-    }
+    
 
     // Start is called before the first frame update
     private void FixedUpdate()

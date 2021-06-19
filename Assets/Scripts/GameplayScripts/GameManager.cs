@@ -8,13 +8,15 @@ using Saving_Stuff;
 
 public class GameManager : MonoBehaviour
 {
+    private GameObject myPlat;
     private HighScoreSystem _highScoreSystem;
+    [Header("Object Variables")]
     public GameObject gameOver;
     public GameObject score;
     public GameObject player;
     public GameObject platformPrefab;
-    public GameObject highScore;
-    private GameObject myPlat;
+    public GameObject canvas;
+    public GameObject saveSystem;
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,11 +29,13 @@ public class GameManager : MonoBehaviour
         {
             gameOver.SetActive(true);
             score.SetActive(false);
-            highScore.SetActive(false);
+            Time.timeScale = 0;
+            canvas.GetComponent<UIScoreHandler>().SetHighScore(); // this allows on death to set the score...
+            saveSystem.GetComponent<HighScoreSystem>().SaveGame(); // it should... save the game after setting everything!
         }
     }
     
-    private void GeneratePlatform()
+    private void GeneratePlatform() // this will be called once conditions are met and basically allows a infinitely generating map above and clean whats below.
     {
         myPlat = Instantiate(platformPrefab,
             new Vector2(Random.Range(-5.5f, 5.5f), player.transform.position.y + (14 + Random.Range(0.5f,  1f))), 
