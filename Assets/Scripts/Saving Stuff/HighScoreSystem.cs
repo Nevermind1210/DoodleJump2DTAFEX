@@ -20,11 +20,12 @@ namespace Saving_Stuff
         private SaveData _gameData;
         private SaveData _loadedGameData;
 
-        private void Start()
+        private void Awake()
         {
             // This prevents nullreferences and allows saves to be found.
             if (!Directory.Exists(Application.streamingAssetsPath))
                 Directory.CreateDirectory(Application.streamingAssetsPath);
+            SaveGame();
         }
         
         public void DisplayHighScore()
@@ -33,13 +34,14 @@ namespace Saving_Stuff
             {
                 Destroy(child.gameObject);
             }
-
-            foreach (HighScores _highScores in _loadedGameData.highScores) // This should iterate through the list and show the list BUG: how ever it isn't
+            
+            foreach (HighScore _highScore in _loadedGameData.highScores) // This should iterate through the list and show the list BUG: how ever it isn't
             {
                 TextMeshProUGUI scoreText = Instantiate(scorePrefab, scoreContent);
-                scoreText.text = _highScores.name + " - " + _highScores.score.ToString("0");
+                scoreText.text = _highScore.name + " - " + _highScore.score.ToString("0");
             }
         }
+        
         public void SaveGame()
         {
             Debug.Log("Saving Data");
@@ -60,7 +62,6 @@ namespace Saving_Stuff
             if (File.Exists(FilePath + ".bin"))
             {
                 Debug.Log("Loaded Save File");
-                return;
             }
             else
             {
@@ -71,9 +72,9 @@ namespace Saving_Stuff
             {
                 // we Open it and close it after we Deserialize it.
                 BinaryFormatter bf = new BinaryFormatter();
-                
                 _loadedGameData = bf.Deserialize(stream) as SaveData;
-                _loadedGameData.Sort(); // and sort by score!
+                UIScoreHandler.highScores = _loadedGameData.highScores;
+               // _loadedGameData.Sort(); // and sort by score!
             }
         }
     }

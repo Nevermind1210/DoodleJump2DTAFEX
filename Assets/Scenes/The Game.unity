@@ -2563,7 +2563,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1685217180}
         m_TargetAssemblyTypeName: UIHandler, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: QuitToMain
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4934,7 +4934,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit
+  m_Text: Main Menu
 --- !u!222 &2096519471
 CanvasRenderer:
   m_ObjectHideFlags: 0

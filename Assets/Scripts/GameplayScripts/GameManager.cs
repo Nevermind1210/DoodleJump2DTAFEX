@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
             gameOver.SetActive(true);
             score.SetActive(false);
             Time.timeScale = 0;
-            canvas.GetComponent<UIScoreHandler>().SetHighScore(); // this allows on death to set the score...
+            canvas.GetComponent<HighScoreSystem>().LoadGame(); 
+            canvas.GetComponent<UIScoreHandler>().SetHighScore(); // this allows on death to set the score..
             saveSystem.GetComponent<HighScoreSystem>().SaveGame(); // it should... save the game after setting everything!
         }
     }

@@ -7,11 +7,12 @@ namespace Saving_Stuff
     [System.Serializable]
     public class SaveData
     {
-        public List<HighScores> highScores = new List<HighScores>(); // this is the main save for the data
+        public static SaveData theSaveData;
+        public List<HighScore> highScores = new List<HighScore>(); // this is the main save for the data
         
-        public SaveData(List<HighScores> _highScore) // we overload the function 
+        public SaveData(List<HighScore> _highScores) // we overload the function 
         {
-            highScores = _highScore; // and set the list from itself...
+            highScores = _highScores; // and set the list from itself...
         }
 
         public void Sort()

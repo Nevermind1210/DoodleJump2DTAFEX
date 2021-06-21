@@ -14,8 +14,8 @@ public class UIScoreHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI finalScore;
 
-    public static List<HighScores> highScores = new List<HighScores>();
-    public HighScores scoring;
+    public static List<HighScore> highScores = new List<HighScore>();
+    public HighScore scoring;
     
     private void Start()
     {
